@@ -1,0 +1,7 @@
+{
+  "name": "Aura AI Studio (Ultra Edition)",
+  "description": "A high-end biometric simulation engine for hyper-realistic persona photography using Gemini 3.0 Pro architecture.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
