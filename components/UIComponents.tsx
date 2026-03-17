@@ -194,7 +194,7 @@ export const LuxurySlider: React.FC<SliderProps> = ({ label, value, onChange, mi
         type="range"
         min={min}
         max={max}
-        value={value}
+        value={value ?? 0}
         onChange={(e) => onChange(Number(e.target.value))}
         className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
         />
@@ -249,7 +249,7 @@ export const LuxuryInput: React.FC<TextInputProps> = ({
          {area ? (
         <textarea
             className={`w-full bg-black/20 border rounded-lg p-3 text-sm text-white focus:outline-none transition-all duration-300 resize-none h-24 backdrop-blur-sm ${isLocked ? 'border-red-500/30 bg-red-500/5 text-gray-300' : 'border-white/10 focus:border-aura-accent focus:bg-black/60 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] hover:border-white/20'}`}
-            value={value}
+            value={value || ""}
             onChange={(e) => !isLocked && onChange(e.target.value)}
             readOnly={isLocked}
             placeholder={placeholder}
@@ -258,7 +258,7 @@ export const LuxuryInput: React.FC<TextInputProps> = ({
         <input
             type="text"
             className={`w-full bg-black/20 border rounded-lg p-3 text-sm text-white focus:outline-none transition-all duration-300 backdrop-blur-sm ${isLocked ? 'border-red-500/30 bg-red-500/5 text-gray-300' : 'border-white/10 focus:border-aura-accent focus:bg-black/60 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] hover:border-white/20'}`}
-            value={value}
+            value={value || ""}
             onChange={(e) => !isLocked && onChange(e.target.value)}
             readOnly={isLocked}
             placeholder={placeholder}
@@ -311,7 +311,7 @@ export const LuxuryDropdown: React.FC<DropdownProps> = ({ label, value, options,
     </div>
     <div className="relative group">
       <select
-        value={value}
+        value={value || ""}
         onChange={(e) => onChange(e.target.value)}
         className="w-full bg-black/20 border border-white/10 rounded-lg p-3 text-sm text-white focus:border-aura-accent focus:outline-none appearance-none cursor-pointer transition-all duration-300 hover:border-white/30 hover:bg-black/40 focus:shadow-[0_0_15px_rgba(139,92,246,0.1)]"
       >

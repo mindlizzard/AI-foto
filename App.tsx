@@ -116,7 +116,9 @@ const App = () => {
       setIsProcessingDownload(true);
       try {
           const img = new Image();
-          img.crossOrigin = "anonymous";
+          if (asset.url.startsWith('http')) {
+              img.crossOrigin = "anonymous";
+          }
           img.src = asset.url;
           
           await new Promise((resolve, reject) => {
@@ -185,24 +187,42 @@ const App = () => {
               }, 'image/png');
           } else {
               // JPG: High Quality 1.0
-              const url = canvas.toDataURL('image/jpeg', 1.0);
-              const link = document.createElement('a');
-              link.href = url;
-              link.download = filename;
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
+              canvas.toBlob((blob) => {
+                  if (blob) {
+                      const url = URL.createObjectURL(blob);
+                      const link = document.createElement('a');
+                      link.href = url;
+                      link.download = filename;
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
+                      URL.revokeObjectURL(url);
+                  }
+              }, 'image/jpeg', 1.0);
           }
 
       } catch (e) {
           console.error("Download failed", e);
           alert("Upscale failed. Downloading original file.");
-          const link = document.createElement("a");
-          link.href = asset.url;
-          link.download = `aura-backup-${asset.id}.png`;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+          try {
+              const res = await fetch(asset.url);
+              const blob = await res.blob();
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = `aura-backup-${asset.id}.png`;
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              URL.revokeObjectURL(url);
+          } catch (fallbackErr) {
+              const link = document.createElement("a");
+              link.href = asset.url;
+              link.download = `aura-backup-${asset.id}.png`;
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+          }
       } finally {
           setIsProcessingDownload(false);
       }

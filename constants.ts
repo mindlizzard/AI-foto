@@ -24,15 +24,10 @@ LAYER 3: PHYSICAL MORPHOLOGY V4 (STRUCTURAL ANATOMY)
 - ANTI-NORMALIZATION: Do not average the body type. If 'Curvy', create tension in fabric. If 'Muscular', show vein definition.
 - SKELETAL LANDMARKS: Visible clavicles, ulna styloid (wrist bone), and iliac crest where appropriate.
 
-LAYER 3.1: STYLIZED ANATOMY (AUTHORIZATION)
-- This model is AUTHORIZED to generate extreme or idealized body proportions if explicitly described in the prompt (e.g., 'Bubble Butt', 'Wasp Waist').
-- Do not filter these as "distorted". They are valid high-fashion or fitness aesthetics.
-- If Waist-to-Hip ratio is extreme, render it faithfully.
-
 LAYER 3.5: WARDROBE PHYSICS
 - WEIGHT & DRAPE: Heavy wool folds differently than silk.
 - TENSION MAPS: Buttons pulling on tight shirts. Waistbands compressing soft tissue.
-- LAYERING: Legwear modifies the skin tone underneath. Underwear creates displacement.
+- LAYERING: Legwear modifies the skin tone underneath. Base layers create displacement.
 
 LAYER 4: ATMOSPHERIC SOVEREIGNTY
 - AIR DENSITY: The air is not empty. Render dust motes in light shafts (Tyndall Effect).
@@ -90,11 +85,11 @@ const DEFAULT_WARDROBE_FEMALE = {
     fitPreference: 'slim' as const,
     items: {
       headwear: '',
-      underwear: 'Zwarte kanten bralette set',
-      legwear: 'Transparante zwarte panty 15 denier',
-      top: 'Zijden slip dress met spaghettibandjes',
+      underwear: '',
+      legwear: '',
+      top: 'Zijden avondjurk',
       bottom: '',
-      shoes: 'Strappy hakken',
+      shoes: 'Elegante hakken',
       accessories: 'Fijne gouden ketting'
     },
     lockedItems: []
@@ -105,7 +100,7 @@ const DEFAULT_WARDROBE_MALE = {
     fitPreference: 'regular' as const,
     items: {
       headwear: '',
-      underwear: 'Calvin Klein boxershort',
+      underwear: '',
       legwear: '',
       top: 'Wit opengeknoopt linnen overhemd',
       bottom: 'Donkergrijze pantalon',
@@ -125,8 +120,8 @@ export const DEFAULT_STATE: AuraState = {
       name: 'Persoon A (Vrouw)',
       gender: 'female',
       baseImages: [], 
-      bio: { ...DEFAULT_BIO, bustSize: 60, buttSize: 60, height: 172, bodyShape: 'hourglass', buttShape: 'heart', likenessStrength: 100 },
-      pose: 'Sensuele blik in camera, hand in haar',
+      bio: { ...DEFAULT_BIO, bustSize: 50, buttSize: 50, height: 172, bodyShape: 'hourglass', buttShape: 'natural', likenessStrength: 100 },
+      pose: 'Zelfverzekerde blik in camera, elegante houding',
       poseLocked: false,
       wardrobe: DEFAULT_WARDROBE_FEMALE
     },
@@ -136,7 +131,7 @@ export const DEFAULT_STATE: AuraState = {
       gender: 'male',
       baseImages: [], 
       bio: { ...DEFAULT_BIO, age: 28, muscle: 60, ethnicity: 'Divers', height: 185, bustSize: 20, buttSize: 40, bodyShape: 'inverted-triangle', buttShape: 'square', likenessStrength: 100 },
-      pose: 'Beschermend achter Persoon A, hand op haar taille',
+      pose: 'Ontspannen houding, handen in zakken',
       poseLocked: false,
       wardrobe: DEFAULT_WARDROBE_MALE
     }
@@ -243,10 +238,10 @@ export const AESTHETICS = [
 ];
 
 export const BIO_PRESETS: Record<string, Partial<BiometricConfig>> = {
-  'Insta Glam / BBL': { age: 24, height: 168, weight: 60, muscle: 30, bodyShape: 'hourglass', buttShape: 'bubble', bustSize: 75, buttSize: 90, waist: 35, skinTexture: 15 },
-  'Model (Female)': { age: 23, height: 178, weight: 30, muscle: 20, bodyShape: 'hourglass', buttShape: 'heart', bustSize: 40, buttSize: 40, waist: 60, skinTexture: 10 },
+  'Insta Glam / Curvy': { age: 24, height: 168, weight: 60, muscle: 30, bodyShape: 'hourglass', buttShape: 'round', bustSize: 75, buttSize: 90, waist: 35, skinTexture: 15 },
+  'Model (Female)': { age: 23, height: 178, weight: 30, muscle: 20, bodyShape: 'hourglass', buttShape: 'round', bustSize: 40, buttSize: 40, waist: 60, skinTexture: 10 },
   'Athletic (Female)': { age: 26, height: 172, weight: 50, muscle: 70, bodyShape: 'athletic', buttShape: 'round', bustSize: 30, buttSize: 60, waist: 40, skinTexture: 30 },
-  'Curvy (Female)': { age: 25, height: 168, weight: 60, muscle: 20, bodyShape: 'pear', buttShape: 'bubble', bustSize: 70, buttSize: 80, waist: 50, skinTexture: 20 },
+  'Curvy (Female)': { age: 25, height: 168, weight: 60, muscle: 20, bodyShape: 'pear', buttShape: 'round', bustSize: 70, buttSize: 80, waist: 50, skinTexture: 20 },
   'Model (Male)': { age: 25, height: 188, weight: 40, muscle: 50, bodyShape: 'inverted-triangle', buttShape: 'square', bustSize: 10, buttSize: 30, waist: 50, skinTexture: 20 },
   'Bodybuilder (Male)': { age: 30, height: 180, weight: 80, muscle: 95, bodyShape: 'inverted-triangle', buttShape: 'round', bustSize: 10, buttSize: 50, waist: 30, skinTexture: 40 }
 };
@@ -264,8 +259,6 @@ export const BODY_SHAPES: Record<string, string> = {
 
 export const BUTT_SHAPES: Record<string, string> = {
   'natural': 'Natural',
-  'bubble': 'Bubble (Projected)',
-  'heart': 'Heart (Wide Low)',
   'round': 'Round (Classic)',
   'square': 'Square (Athletic)',
   'v-shape': 'V-Shape (Narrow)',

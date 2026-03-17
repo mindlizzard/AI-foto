@@ -19,7 +19,7 @@ export enum RenderQuality {
 
 export enum ModelVersion {
   GEMINI_2_5_FLASH = 'gemini-2.5-flash-image',
-  GEMINI_3_0_PRO = 'gemini-3-pro-image-preview'
+  GEMINI_3_0_PRO = 'gemini-3.1-flash-image-preview'
 }
 
 // Text models
@@ -36,7 +36,7 @@ export enum OutputResolution {
 }
 
 export type BodyShape = 'hourglass' | 'pear' | 'rectangle' | 'inverted-triangle' | 'apple' | 'athletic';
-export type ButtShape = 'natural' | 'bubble' | 'heart' | 'round' | 'square' | 'v-shape' | 'inverted';
+export type ButtShape = 'natural' | 'round' | 'square' | 'v-shape' | 'inverted';
 
 export interface BiometricConfig {
   age: number;
